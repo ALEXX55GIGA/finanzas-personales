@@ -4,6 +4,7 @@ import {getDatabase, ref as dbRef, push } from "firebase/database";
 import { auth } from '../firebase.js'
 
 
+
 const type = ref('ingresos')
 const amount = ref(0)
 const db = getDatabase();
@@ -12,7 +13,8 @@ const db = getDatabase();
 const addTransaction = async () => {
     const user = auth.currentUser
     if(user && amount.value != null){
-        const transactionsRef = dbRef(db, 'transactions');
+        const transactionsRef = dbRef(db, `transactions/${user.uid}`);
+                                          
     
     const newTransaction = {
         type: type.value,
@@ -41,7 +43,7 @@ const addTransaction = async () => {
             <label style="margin-right: 5px">tipo de transacción</label>
             <select v-model="type" id="">
                 <option value="ingresos">ingreso</option>
-                <option value="ingresos">gasto</option>
+                <option value="gasto">gasto</option>
             </select>
         </div>
 
